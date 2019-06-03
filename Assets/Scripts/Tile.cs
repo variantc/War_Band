@@ -15,6 +15,7 @@ public class Tile : MonoBehaviour {
         yPos = y;
         sr.sprite = spr;
         this.transform.position = new Vector3(xPos, yPos, 0f);
+        this.transform.name = "Tile" + xPos + "," + yPos;
     }
 
     public Vector2 GetTileCoords()

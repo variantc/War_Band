@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour {
     public Sprite[] grassSprites;
-    public static int height = 10;
-    public static int width = 10;
+    public static int height = 20;
+    public static int width = 20;
     public Tile tilePrefab;
 
     private void Start()

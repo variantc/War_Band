@@ -4,4 +4,7 @@ using UnityEngine;
 
 public class Refs : MonoBehaviour {
     public UnitController unitController;
+    public MouseController mouseController;
+    public MapController mapController;
+
 }

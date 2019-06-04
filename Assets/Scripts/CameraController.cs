@@ -10,8 +10,8 @@ public class CameraController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         // Set camera to centre of map tiles
-        this.transform.position = new Vector3(MapGenerator.width / 2 + 0.5f,
-                                                MapGenerator.height / 2 - 0.5f,
+        this.transform.position = new Vector3(MapController.width / 2 + 0.5f,
+                                                MapController.height / 2 - 0.5f,
                                                 -10f);
 	}
 

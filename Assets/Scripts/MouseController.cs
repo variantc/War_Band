@@ -10,20 +10,35 @@ public class MouseController : MonoBehaviour {
     {
         if (Input.GetMouseButtonUp(0))
         {
-            // TODO, not selecting now
-            Debug.Log("Click");
             RaycastHit2D hit = DoRaycastAtMouse();
-            Debug.Log("hit " + hit.transform.gameObject.name);
+
+            if (hit.transform.gameObject == null)
+            {
+                Debug.Log("problem?");
+                return;
+            }
 
             if (hit.transform.tag == "Unit")
             {
-                Debug.Log("Unit");
                 hit.transform.gameObject.GetComponent<Unit>().IsSelected = true;
                 refs.unitController.SelectionMade();
+                Debug.Log("unit tag");
             }
             else
             {
-                refs.unitController.UnSelectUnits();
+                if (hit.transform.tag == "Terrain")
+                {
+                    if (hit.transform.gameObject.GetComponent<Tile>().UnitAtTile() != null)
+                    {
+                        hit.transform.gameObject.GetComponent<Tile>().UnitAtTile().IsSelected = true;
+
+                        refs.unitController.SelectionMade();
+                    }
+                    else
+                    {
+                        refs.unitController.UnSelectUnits();
+                    }
+                }
             }
         }
         if (Input.GetMouseButtonUp(1))

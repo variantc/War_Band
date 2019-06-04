@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapGenerator : MonoBehaviour {
+public class MapController : MonoBehaviour
+{
+    public Refs refs;
+
     public Sprite[] grassSprites;
     public static int height = 20;
     public static int width = 20;
@@ -18,5 +21,21 @@ public class MapGenerator : MonoBehaviour {
                 t.SetupTile(i, j, grassSprites[Random.Range(0, grassSprites.Length)]);
             }
         }
+    }
+
+    public Tile GetTileAt(Vector3 tilePos)
+    {
+        Tile foundTile = null;
+
+        foreach (Tile t in GetComponentsInChildren<Tile>())
+        {
+            if (t.transform.position == tilePos)
+            {
+                foundTile = t;
+            }
+        }
+
+        Debug.LogError("MapController.GetTileAt : No tile found at : " + tilePos);
+        return foundTile;
     }
 }

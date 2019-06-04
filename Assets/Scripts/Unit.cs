@@ -47,5 +47,9 @@ public class Unit : MonoBehaviour
         Vector3 heading = (destination - this.transform.position).normalized;
         this.transform.position += heading * Time.deltaTime * moveSpeed;
     }
-    
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("dsf");
+    }
 }

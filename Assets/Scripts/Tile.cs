@@ -19,6 +19,14 @@ public class Tile : MonoBehaviour {
         GetUnit();
     }
 
+    private void FixedUpdate()
+    {
+        if (unitAtTile != null)
+            GetComponent<SpriteRenderer>().color = Color.blue;
+        else
+            GetComponent<SpriteRenderer>().color = Color.white;
+    }
+
     public void SetupTile(int x, int y, Sprite spr)
     {
         sr = GetComponent<SpriteRenderer>();
@@ -45,18 +53,50 @@ public class Tile : MonoBehaviour {
         return new Vector2(xPos, yPos);
     }
 
-    //// add the unit u to this tile object
-    //public void UnitToTile (Unit u)
-    //{
-    //    if (unitAtTile == null)
-    //    {
-    //        unitAtTile = u;
-    //    }
-    //    else
-    //    {
-    //        Debug.LogError("Tile.UnitToTile() : Unit already at tile: " + this.transform.name);
-    //    }
-    //}
+    // add the unit u to this tile object
+    public void UnitToTile(Unit u)
+    {
+        if (unitAtTile == null)
+        {
+            unitAtTile = u;
+        }
+        else
+        {
+            Debug.LogError("Tile.UnitToTile() : Unit already at tile: " + this.transform.name);
+        }
+    }
+
+    public bool CheckForUnit()
+    {
+        // get the collider2D on this tile
+        Collider2D col = GetComponent<Collider2D>();
+        // make a temporary collider2D array to store any overlapping units
+        Collider2D[] colliders = new Collider2D[1];
+        // make a filter and give it the mask to look for "Unit"
+        ContactFilter2D filter = new ContactFilter2D();
+        filter.layerMask = LayerMask.GetMask("Unit");
+
+        // get any overlapping colliders (caught by filter -- looking for "Unit" layer)
+        int num = col.OverlapCollider(filter, colliders);
+
+        // Check there is only one collider here
+        if (num == 1)
+        {
+            unitAtTile = colliders[num - 1].gameObject.GetComponent<Unit>();
+            return true;
+        }
+        if (num > 1)
+        {
+            unitAtTile = null;
+            Debug.LogError("Multiple Units at tile");
+            return false;
+        }
+        else
+        {
+            unitAtTile = null;
+            return false;
+        }
+    }
 
     //// remove the unit from this tile
     //public Unit UnitFromTile ()
@@ -88,12 +128,21 @@ public class Tile : MonoBehaviour {
         }
     }
     
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        unitAtTile = collision.gameObject.GetComponent<Unit>();
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        unitAtTile = null;
-    }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    // only update unitAtTile if don't already have unit here
+    //    if (unitAtTile == null)
+    //        unitAtTile = collision.gameObject.GetComponent<Unit>();
+    //}
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.GetComponent<Unit>() == null)
+    //        return;
+    //    // check that the Unit leaving the Tile is the current unit - to prevent errors of a
+    //    // passing Unit 'nullifying' the unitAtTile variable
+    //    if (collision.gameObject.GetComponent<Unit>() != unitAtTile)
+    //        return;
+    //    else
+    //        unitAtTile = null;
+    //}
 }

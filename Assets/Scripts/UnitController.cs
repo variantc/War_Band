@@ -18,6 +18,7 @@ public class UnitController : MonoBehaviour {
         {
             Unit unit = Instantiate(unitPrefab, this.transform);
             unit.transform.position = new Vector3(Random.Range(5, 15), Random.Range(5, 15), 0f);
+            unit.transform.name = "Unit_" + i;
         }
         // find all starting units and add to 'units' list
         foreach (Unit u in FindObjectsOfType<Unit>())

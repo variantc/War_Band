@@ -11,6 +11,10 @@ public class MapController : MonoBehaviour
     public static int width = 20;
     public Tile tilePrefab;
 
+    bool unitsMoved = false;
+
+    float timer = 0f;
+
     private void Start()
     {
         for (int i = 0; i < width; i++)
@@ -21,6 +25,17 @@ public class MapController : MonoBehaviour
                 t.SetupTile(i, j, grassSprites[Random.Range(0, grassSprites.Length)]);
             }
         }
+    }
+
+    private void FixedUpdate()
+    {
+        //if (timer > 1f)
+        //{
+        //    CheckTileUnits();
+        //    timer = 0;
+        //    Debug.Log("A");
+        //}
+        //timer += Time.deltaTime;
     }
 
     public Tile GetTileAt(Vector3 tilePos)
@@ -37,5 +52,13 @@ public class MapController : MonoBehaviour
 
         Debug.LogError("MapController.GetTileAt : No tile found at : " + tilePos);
         return foundTile;
+    }
+
+    public void CheckTileUnits()
+    {
+        foreach (Tile t in GetComponentsInChildren<Tile>())
+        {
+            t.CheckForUnit();
+        }
     }
 }

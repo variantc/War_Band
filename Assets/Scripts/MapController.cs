@@ -21,23 +21,14 @@ public class MapController : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
+                // create tile and set up with random grass tile and store the current location
+                // in each tile
                 Tile t = Instantiate(tilePrefab, this.transform);
                 t.SetupTile(i, j, grassSprites[Random.Range(0, grassSprites.Length)]);
             }
         }
     }
-
-    private void FixedUpdate()
-    {
-        //if (timer > 1f)
-        //{
-        //    CheckTileUnits();
-        //    timer = 0;
-        //    Debug.Log("A");
-        //}
-        //timer += Time.deltaTime;
-    }
-
+    
     public Tile GetTileAt(Vector3 tilePos)
     {
         Tile foundTile = null;
